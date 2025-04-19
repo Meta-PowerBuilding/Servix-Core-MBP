@@ -1,0 +1,137 @@
+<%- include('partials/header', { title: 'Admin Dashboard', user: user }) %>
+
+<%
+// Helper function to recursively render the file structure
+function renderStructure(items, currentPath = '', level = 0) {
+    let html = '<ul class="file-browser">';
+
+    // Render folders first
+    if (items.folders) {
+        Object.keys(items.folders).sort().forEach(folderName => {
+            const folderData = items.folders[folderName];
+            const folderPath = currentPath ? `${currentPath}/${folderName}` : folderName;
+            html += `
+                <li>
+                    <div class="file-info">
+                        <span class="folder">📁 ${folderName}</span>
+                        (<a href="/admin?path=${encodeURIComponent(folderPath)}">Browse</a>)
+                    </div>
+                    <div class="file-actions">
+                        <form action="/admin/delete-folder" method="POST" onsubmit="return confirm('Are you sure you want to delete the folder \'${folderName}\' and ALL its contents?');">
+                            <input type="hidden" name="path" value="${folderPath}">
+                            <button type="submit" class="btn btn-danger">Delete Folder</button>
+                        </form>
+                    </div>
+                </li>
+            `;
+            // Optional: Recursively render subfolders directly here if not browsing into them
+            // if (level < 1) { // Limit recursion depth for inline view if desired
+            //    html += renderStructure(folderData, folderPath, level + 1);
+            // }
+        });
+    }
+
+    // Render files
+    if (items.files) {
+        items.files.sort((a, b) => a.originalName.localeCompare(b.originalName)).forEach(file => {
+            const filePath = currentPath ? `${currentPath}/${file.storedName}` : file.storedName;
+            const publicUrl = `/f/${file.storedName}`; // Simple structure for now
+            const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+            const uploadDate = new Date(file.uploadDate).toLocaleString();
+
+             // Adjust public URL and stored name if it's within a folder for serving/deletion
+             const fullStoredPath = currentPath ? `${currentPath}/${file.storedName}` : file.storedName;
+
+
+            html += `
+                <li>
+                     <div class="file-info">
+                        📄 <a href="/f/${encodeURIComponent(fullStoredPath)}" target="_blank" class="file-link" title="Stored: ${file.storedName}">${file.originalName}</a>
+                        <span class="file-meta">(${fileSizeMB} MB, Uploaded: ${uploadDate})</span>
+                     </div>
+                     <div class="file-actions">
+                         <form action="/admin/delete-file" method="POST" onsubmit="return confirm('Are you sure you want to delete the file \'${file.originalName}\'?');">
+                             <input type="hidden" name="path" value="${currentPath}">
+                             <input type="hidden" name="storedName" value="${file.storedName}">
+                             <button type="submit" class="btn btn-danger">Delete File</button>
+                         </form>
+                     </div>
+                </li>
+            `;
+        });
+    }
+
+    html += '</ul>';
+    return html;
+}
+
+// Helper to get the current folder object from the nested structure
+function getFolderData(structure, path) {
+    if (!path) {
+        return structure; // Root
+    }
+    const parts = path.split('/');
+    let current = structure;
+    for (const part of parts) {
+        if (current.folders && current.folders[part]) {
+            current = current.folders[part];
+        } else {
+            return null; // Path not found
+        }
+    }
+    return current;
+}
+
+const currentFolderData = getFolderData(fileStructure, currentPath);
+%>
+
+<h2>File Management</h2>
+
+<div class="path-navigator">
+    Current Path:
+    <a href="/admin">Root</a>
+    <% if (currentPath) {
+        let pathAccumulator = '';
+        currentPath.split('/').forEach((part, index, arr) => {
+            pathAccumulator += (pathAccumulator ? '/' : '') + part;
+    %>
+        / <a href="/admin?path=<%= encodeURIComponent(pathAccumulator) %>"><%= part %></a>
+    <%
+        });
+    } %>
+</div>
+
+
+<!-- Upload Form -->
+<form action="/admin/upload" method="POST" enctype="multipart/form-data">
+    <h3>Upload New File</h3>
+    <input type="hidden" name="path" value="<%= currentPath %>">
+    <div>
+        <label for="file">Choose file:</label>
+        <input type="file" id="file" name="file" required>
+    </div>
+    <button type="submit">Upload File</button>
+</form>
+
+<!-- Create Folder Form -->
+<form action="/admin/create-folder" method="POST">
+     <h3>Create New Folder</h3>
+     <input type="hidden" name="path" value="<%= currentPath %>">
+     <div>
+         <label for="folderName">Folder Name:</label>
+         <input type="text" id="folderName" name="folderName" required pattern="^[a-zA-Z0-9_\-\.]+$" title="Only alphanumeric, underscore, hyphen, dot allowed">
+     </div>
+     <button type="submit">Create Folder</button>
+</form>
+
+
+<!-- File Browser -->
+<h3>Files and Folders in "<%= currentPath || 'Root' %>"</h3>
+<% if (currentFolderData) { %>
+    <%- renderStructure(currentFolderData, currentPath) %>
+<% } else { %>
+    <p>Invalid path or folder not found.</p>
+<% } %>
+
+
+<%- include('partials/footer') %>

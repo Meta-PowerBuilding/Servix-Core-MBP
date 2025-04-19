@@ -1,0 +1,195 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+h1, h2 {
+    color: #555;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+nav {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-radius: 5px 5px 0 0;
+}
+
+nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    margin: 0 auto; /* Override container margin */
+    background-color: #333; /* Ensure nav background */
+    box-shadow: none;
+}
+
+nav h1 {
+    margin: 0;
+    padding: 0;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+}
+
+nav form {
+    margin: 0;
+}
+
+nav button, .btn {
+    background-color: #5cb85c;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9em;
+    text-decoration: none; /* For link-styled buttons */
+    display: inline-block; /* For link-styled buttons */
+}
+nav button:hover, .btn:hover {
+    background-color: #4cae4c;
+}
+.btn-danger {
+    background-color: #d9534f;
+}
+.btn-danger:hover {
+    background-color: #c9302c;
+}
+
+
+form {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="file"] {
+    width: calc(100% - 22px); /* Account for padding */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+button[type="submit"] {
+    background-color: #337ab7;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #286090;
+}
+
+.error {
+    color: #d9534f;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+}
+
+.file-browser {
+    list-style: none;
+    padding: 0;
+}
+.file-browser ul {
+     list-style: none;
+     padding-left: 20px;
+}
+
+.file-browser li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.file-browser li:last-child {
+    border-bottom: none;
+}
+
+.file-browser .folder {
+    font-weight: bold;
+    color: #337ab7; /* Blue color for folders */
+}
+
+.file-browser .file-info {
+    flex-grow: 1;
+    margin-right: 10px;
+    word-break: break-all; /* Prevent long names overflowing */
+}
+.file-browser .file-actions form {
+    display: inline-block;
+    margin: 0 0 0 5px;
+    padding: 0;
+    background: none;
+    border: none;
+}
+.file-browser .file-actions button {
+    padding: 3px 8px;
+    font-size: 0.8em;
+}
+
+.path-navigator {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: #666;
+}
+.path-navigator a {
+    color: #337ab7;
+    text-decoration: none;
+}
+.path-navigator a:hover {
+    text-decoration: underline;
+}
+
+.file-link {
+    color: #007bff;
+    text-decoration: none;
+}
+.file-link:hover {
+     text-decoration: underline;
+}
+.file-meta {
+    font-size: 0.8em;
+    color: #777;
+    margin-left: 10px;
+}
+
+/* Login Specific */
+.login-container {
+    max-width: 400px;
+    margin-top: 50px;
+}
