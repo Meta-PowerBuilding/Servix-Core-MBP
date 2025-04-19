@@ -17,7 +17,7 @@ function renderStructure(items, currentPath = '', level = 0) {
                         (<a href="/admin?path=${encodeURIComponent(folderPath)}">Browse</a>)
                     </div>
                     <div class="file-actions">
-                        <form action="/admin/delete-folder" method="POST" onsubmit="return confirm('Are you sure you want to delete the folder \'${folderName}\' and ALL its contents?');">
+                        <form action="/admin/delete-folder" method="POST" onsubmit="return confirm('Are you sure you want to delete the folder \\'${folderName}\\' and ALL its contents?');">
                             <input type="hidden" name="path" value="${folderPath}">
                             <button type="submit" class="btn btn-danger">Delete Folder</button>
                         </form>
@@ -50,7 +50,7 @@ function renderStructure(items, currentPath = '', level = 0) {
                         <span class="file-meta">(${fileSizeMB} MB, Uploaded: ${uploadDate})</span>
                      </div>
                      <div class="file-actions">
-                         <form action="/admin/delete-file" method="POST" onsubmit="return confirm('Are you sure you want to delete the file \'${file.originalName}\'?');">
+                         <form action="/admin/delete-file" method="POST" onsubmit="return confirm('Are you sure you want to delete the file \\'${file.originalName}\\'?');">
                              <input type="hidden" name="path" value="${currentPath}">
                              <input type="hidden" name="storedName" value="${file.storedName}">
                              <button type="submit" class="btn btn-danger">Delete File</button>
