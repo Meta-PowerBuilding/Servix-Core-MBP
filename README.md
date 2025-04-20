@@ -82,7 +82,7 @@ This project provides a basic, self-contained file server solution suitable for 
         }
         ```
 
-5.  **(Optional) Configure Session Secret:**
+5.  **IMPORTANT: Configure Session Secret:**
     *   Open `server.js` and change the `secret` value within the `session({...})` configuration to a long, random string.
 
 ## Running the Server
