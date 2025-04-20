@@ -15,6 +15,10 @@ dotenv.config(); // Load .env file
 const app = express();
 const port = process.env.WEB_PORT || 3825; // Default to 3825 if not set in .env
 const sessionSecret = process.env.SESSION_SECRET;
+if (!sessionSecret) {
+    console.error("SESSION_SECRET not set in .env. Exiting.");
+    process.exit(1); // Exit if session secret is not set
+}
 
 const USERS_FILE = path.join(__dirname, 'data', 'users.json');
 const FILES_METADATA_FILE = path.join(__dirname, 'data', 'files.json');
@@ -95,7 +99,7 @@ function getParentFolderReference(metadata, fullPath) {
 
 // Session middleware (INSECURE MemoryStore for demo only)
 app.use(session({
-    secret: 'a_very_secret_key_change_me_later', // CHANGE THIS!
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false } // Set to true if using HTTPS
