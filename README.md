@@ -1,4 +1,4 @@
-# NodeJS Simple CDN File Server
+# Servix-Core Simple CDN Server
 
 A self-hosted, NodeJS-based web file server (CDN) featuring an admin panel for uploading, managing, and deleting files and folders. Files are served publicly via unique URLs generated upon upload.
 
@@ -48,8 +48,8 @@ This project provides a basic, self-contained file server solution suitable for 
 
 1.  **Clone or Download:**
     ```bash
-    git clone <repository-url> cdn-fileserver
-    cd cdn-fileserver
+    git clone https://github.com/GRENIER-LABS/Servix-Core
+    cd Servix-Core
     ```
     Or download the code manually and navigate to the directory.
 
@@ -70,7 +70,7 @@ This project provides a basic, self-contained file server solution suitable for 
         [
           {
             "username": "admin",
-            "password": "your_very_insecure_password"
+            "password": "your_secure_password"
           }
         ]
         ```
@@ -82,8 +82,13 @@ This project provides a basic, self-contained file server solution suitable for 
         }
         ```
 
-5.  **(Optional) Configure Session Secret:**
-    *   Open `server.js` and change the `secret` value within the `session({...})` configuration to a long, random string.
+    *   Create an empty `.env` to store environment variables:
+        ```env
+        SESSION_SECRET=CHANGE_THIS_TO_SOMETHING_RANDOM_AND_SECURE
+
+        WEB_PORT=3825
+        ```
+        **IMPORTANT: Set the Session secret to something secure:**
 
 ## Running the Server
 
@@ -91,11 +96,11 @@ This project provides a basic, self-contained file server solution suitable for 
 node server.js
 ```
 
-By default, the server will run on `http://localhost:3000`.
+By default, the server will run on `http://localhost:3825`.
 
-*   **Admin Login:** `http://localhost:3000/login`
-*   **Admin Panel (after login):** `http://localhost:3000/admin`
-*   **Public Files:** `http://localhost:3000/f/<generated-file-name.ext>` or `http://localhost:3000/f/<folder-name>/<generated-file-name.ext>`
+*   **Admin Login:** `http://localhost:3825/login`
+*   **Admin Panel (after login):** `http://localhost:3825/admin`
+*   **Public Files:** `http://localhost:3825/f/<generated-file-name.ext>` or `http://localhost:3825/f/<folder-name>/<generated-file-name.ext>`
 
 ## Usage
 
@@ -127,6 +132,7 @@ cdn-fileserver/
 │   ├── admin.ejs        # Admin panel view
 │   └── login.ejs        # Login page view
 ├── .gitignore
+├── .env
 ├── package.json
 ├── package-lock.json
 └── server.js            # Main application file
