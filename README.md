@@ -1,4 +1,4 @@
-# NodeJS Simple CDN File Server
+# Servix-Core Simple CDN Server
 
 A self-hosted, NodeJS-based web file server (CDN) featuring an admin panel for uploading, managing, and deleting files and folders. Files are served publicly via unique URLs generated upon upload.
 
